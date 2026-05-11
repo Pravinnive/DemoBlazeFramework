@@ -9,11 +9,11 @@ import org.testng.annotations.Test;
 
 
 
-    public class AuthenticationTest extends BaseTest {
+
+public class AuthenticationTest extends BaseTest {
 
         String username = "user" + System.currentTimeMillis();
         String password = "12345";
-
         @Test(priority = 1)
         public void signupTest() {
 
@@ -40,8 +40,9 @@ import org.testng.annotations.Test;
             Assert.assertTrue(homePage.isUserLoggedIn());
         }
 
+
         @Test(priority = 3)
-        public void invalidLoginTest() {
+        public void invalidPasswordLoginTest() {
 
             HomePage homePage = new HomePage(driver);
             homePage.clickLogin();

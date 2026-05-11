@@ -42,4 +42,8 @@ public class BasePage {
         driver.switchTo().alert().accept();
         return text;
     }
+    public void waitForPageLoad(By locator) {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
 }

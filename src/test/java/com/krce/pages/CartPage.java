@@ -25,7 +25,6 @@ public class CartPage extends BasePage {
     private By deleteButtons = By.xpath("//a[text()='Delete']");
     private By totalPrice = By.id("totalp");
 
-    // ===================== NAVIGATION =====================
     public void openCart() {
         click(cartLink);
         try {
@@ -33,7 +32,6 @@ public class CartPage extends BasePage {
         } catch (Exception ignored) {}
     }
 
-    // ===================== VALIDATIONS =====================
     public boolean isProductInCart(String productName) {
         List<WebElement> names = driver.findElements(productNames);
         return names.stream()
@@ -51,7 +49,7 @@ public class CartPage extends BasePage {
                 .anyMatch(text -> text.equals(expected));
     }
 
-    // ===================== CART OPERATIONS =====================
+
     public int getCartItemCount() {
         return driver.findElements(productNames).size();
     }
@@ -69,7 +67,7 @@ public class CartPage extends BasePage {
         }
     }
 
-    // 🔥 NEW: Delete specific product (ADDED for Module 3)
+
     public void deleteProduct(String productName) {
         List<WebElement> rows = driver.findElements(By.xpath("//tr"));
 
@@ -84,8 +82,6 @@ public class CartPage extends BasePage {
         }
     }
 
-    // ===================== TOTAL PRICE =====================
-    // 🔥 NEW: Get total price (ADDED for Module 3)
     public int getTotalPrice() {
         try {
             String total = driver.findElement(totalPrice).getText().trim();
@@ -95,13 +91,13 @@ public class CartPage extends BasePage {
         }
     }
 
-    // ===================== WAITS =====================
+
     public void waitForCartToUpdate(int expectedCount) {
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(d -> getCartItemCount() == expectedCount);
     }
 
-    // Optional helper (safe cart load)
+    
     public void waitForCartPageLoad() {
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(productNames));

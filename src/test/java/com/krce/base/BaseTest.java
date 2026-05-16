@@ -1,5 +1,7 @@
 package com.krce.base;
 
+import com.krce.utils.ConfigReader;
+import com.krce.utils.DriverFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,13 +20,14 @@ public class BaseTest {
         WebDriverManager.chromedriver().setup();
 
         driver = new ChromeDriver();
-
+        DriverFactory.driver = driver;
         driver.manage().window().maximize();
 
         driver.manage().timeouts()
                 .implicitlyWait(Duration.ofSeconds(5));
 
-        driver.get("https://www.demoblaze.com");
+       // driver.get("https://www.demoblaze.com");
+        driver.get(ConfigReader.getProperty("baseUrl"));
     }
 
     @AfterMethod

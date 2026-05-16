@@ -4,6 +4,9 @@ import com.krce.base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 
 public class ProductDetailPage extends BasePage {
@@ -22,8 +25,7 @@ public class ProductDetailPage extends BasePage {
     }
 
     public String getProductPrice() {
-        String priceText = driver.findElement(productPrice).getText();
-        return priceText.replaceAll("[^0-9]", "").trim();
+        return driver.findElement(productPrice).getText().trim();
     }
 
     public String getProductDescription() {
@@ -32,7 +34,10 @@ public class ProductDetailPage extends BasePage {
 
     public void clickAddToCart() {
         driver.findElement(addToCartBtn).click();
-        try { Thread.sleep(1500); } catch (Exception ignored) {}
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.alertIsPresent());
+
         driver.switchTo().alert().accept();
     }
 }

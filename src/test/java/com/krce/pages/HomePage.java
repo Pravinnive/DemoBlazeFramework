@@ -20,6 +20,7 @@ public class HomePage extends BasePage {
     private By loginLink = By.id("login2");
     private By signupLink = By.id("signin2");
     private By logoutLink = By.id("logout2");
+
     private By welcomeUser = By.id("nameofuser");
 
     private By phonesCategory = By.linkText("Phones");
@@ -31,11 +32,9 @@ public class HomePage extends BasePage {
     public void clickLogin() {
         click(loginLink);
     }
-
     public void clickSignup() {
         click(signupLink);
     }
-
     public void clickLogout() {
         click(logoutLink);
     }
@@ -44,28 +43,66 @@ public class HomePage extends BasePage {
         return new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(welcomeUser)).isDisplayed();
     }
 
-    public boolean isLogoutSuccessful() {return new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(loginLink)).isDisplayed();
+    public boolean isLogoutSuccessful() {
+        return new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(loginLink)).isDisplayed();
     }
 
 
     public void clickPhonesCategory() {
+
         driver.findElement(phonesCategory).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(productCards));
-    }
 
+        WebDriverWait wait =
+                new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+                By.xpath("//a[text()='Samsung galaxy s6']")
+        ));
+    }
     public void clickLaptopsCategory() {
-        driver.findElement(laptopsCategory).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(productCards));
-    }
 
+        driver.findElement(laptopsCategory).click();
+
+        WebDriverWait wait =
+                new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+                By.xpath("//a[text()='Sony vaio i5']")
+        ));
+    }
     public boolean areProductsDisplayed() {
+
         return driver.findElements(productCards).size() > 0;
     }
 
     public void clickProduct(String productName) {
-        driver.findElement(By.xpath("//a[text()='" + productName + "']")).click();
-    }
 
+        By product =
+                By.xpath("//a[text()='" + productName + "']");
+
+        WebDriverWait wait =
+                new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        int attempts = 0;
+
+        while (attempts < 3) {
+
+            try {
+
+                wait.until(ExpectedConditions.presenceOfElementLocated(product));
+
+                wait.until(ExpectedConditions.elementToBeClickable(product));
+
+                driver.findElement(product).click();
+
+                break;
+
+            } catch (org.openqa.selenium.StaleElementReferenceException e) {
+
+                attempts++;
+            }
+        }
+    }
     public boolean isCategoryLoaded(String categoryName) {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(productCards));

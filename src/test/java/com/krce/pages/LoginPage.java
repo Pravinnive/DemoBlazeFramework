@@ -23,9 +23,7 @@ public class LoginPage extends BasePage {
     }
 
     public String invalidLogin(String user, String pass) {
-
         login(user, pass);
-
         return getAlertText();
     }
 }

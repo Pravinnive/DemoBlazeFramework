@@ -19,7 +19,6 @@ public class CartPage extends BasePage {
     }
 
     private By cartLink = By.id("cartur");
-
     private By productNames = By.xpath("//tr/td[2]");
     private By productPrices = By.xpath("//tr/td[3]");
     private By deleteButtons = By.xpath("//a[text()='Delete']");
@@ -33,10 +32,9 @@ public class CartPage extends BasePage {
     }
 
     public boolean isProductInCart(String productName) {
-        List<WebElement> names = driver.findElements(productNames);
-        return names.stream()
-                .map(e -> e.getText().trim())
-                .anyMatch(text -> text.equals(productName));
+        return driver.findElements(
+                By.xpath("//tr/td[text()='" + productName + "']")
+        ).size() > 0;
     }
 
     public boolean isPriceInCart(String price) {

@@ -34,6 +34,7 @@ public class BasePage {
         WebElement element = waitForVisibility(locator);
         element.clear();
         element.sendKeys(text);
+
     }
 
     public String getAlertText() {
@@ -45,5 +46,9 @@ public class BasePage {
     public void waitForPageLoad(By locator) {
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+    public void acceptAlert() {
+        wait.until(ExpectedConditions.alertIsPresent());
+        driver.switchTo().alert().accept();
     }
 }

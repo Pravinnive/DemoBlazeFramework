@@ -75,7 +75,6 @@ public class OrderTest extends BaseTest {
 
         Assert.assertTrue(title.contains("Thank you"), "Order failed");
 
-        // 🔥 FIXED ORDER ID CHECK
         Assert.assertTrue(
                 details.toLowerCase().contains("id"),
                 "Order ID not generated properly: " + details
@@ -87,22 +86,14 @@ public class OrderTest extends BaseTest {
 
         CartPage cartPage = new CartPage(driver);
         OrderPage orderPage = new OrderPage(driver);
-
         cartPage.openCart();
-
         orderPage.openPlaceOrder();
-
         orderPage.clickPurchase();
-
-        Assert.assertTrue(
-                isAlertPresent(),
-                "Expected alert NOT shown for empty fields"
-        );
+        Assert.assertTrue(isAlertPresent(), "Expected alert NOT shown for empty fields");
 
         driver.switchTo().alert().accept();
     }
 
-    // FIX: reusable alert handler
     private boolean isAlertPresent() {
         try {
             driver.switchTo().alert();
